@@ -1,6 +1,7 @@
 ## Script to perform faulty ArcGIS Raster Domain Tool
 # One input is file name
 # output is shapefile of extent (not including nodata) in same directory with same filename[.shp]
+# Final result uses seive filter and polygon simplification 1000 map units, but intermediate results without these modifications are in the 'out' folder.
 # creates intermediate output directory "out" and output shape directory "shp"
 # loosely based on https://gis.stackexchange.com/questions/120994/getting-a-raster-extent-excluding-nodata-area?noredirect=1&lq=1
 
@@ -30,6 +31,7 @@ gdal_polygonize.py -f "ESRI Shapefile" out/mask_sieve.tif  out/polygon.shp raste
 
 ## and simplify
 echo Simplify...
+echo "(Final output: shp/$out_shp)"
 ogr2ogr -simplify 1000 -overwrite shp/$out_shp out/polygon.shp # for testing: writes indiv file
 
 ## Append
